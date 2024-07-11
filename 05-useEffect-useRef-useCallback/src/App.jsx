@@ -50,6 +50,8 @@ function App() {
           className='bg-black rounded-md px-5 py-4'>
           <div
             className='bg-white rounded-md flex justify-between gap-2'>
+
+            {/* PASSWORD DISPLAY */}
             <input
               className='flex-1 text-xl p-2 outline-none' value={password} readOnly type="text" ref={passwordRef} />
             <button
@@ -61,16 +63,21 @@ function App() {
           </div>
           <div
             className='mt-4 text-white flex items-center gap-x-4'>
+            {/* INPUT TYPE RANGE FOR LENGTH */}
             <input
               onChange={(e) => { setPasswordLength(e.target.value) }}
               type="range" min={8} max={20} />
             <label>Length: {passwordLength}</label>
+
+            {/* INPUT TYPE CHECK FOR SPECIAL CHAR */}
             <input
               type="checkbox" id='charInput'
               defaultChecked={isCharAllowed}
               onChange={() => { setIsCharAllowed(c => !c) }}
             />
             <label className='cursor-pointer' htmlFor='charInput' >Character</label>
+
+            {/* INPUT TYPE CHECK FOR NUMBER */}
             <input
               type="checkbox" id='numberInput'
               defaultChecked={isNumberAllowed}
