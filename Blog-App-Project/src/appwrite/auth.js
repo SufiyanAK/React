@@ -11,54 +11,42 @@ export class AuthService {
         this.account = new Account(this.client);
     }
 
-    async createAccount({ email, password, name }, res) {
+    async createAccount({ email, password, name }) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (!userAccount) {
-                return res.status(400).send({
-                    message: "Something went wrong, please try again"
-                });
+                return console.log('error happened');
             }
-            await this.loginAccount({ email, password }, res);
-            return res.status(201).send(userAccount);
+            return await this.loginAccount({ email, password });
         } catch (error) {
             console.log(`Error happened: ${error.message}`);
-            return res.status(500).send({ message: error.message });
         }
     }
 
-    async loginAccount({ email, password }, res) {
+    async loginAccount({ email, password }) {
         try {
             const userAccount = await this.account.createEmailPasswordSession(email, password);
             if (!userAccount) {
-                return res.status(400).send({
-                    message: "Wrong Email or Password"
-                });
+                return console.log('error Happened');
             }
-            return res.status(200).send(userAccount);
         } catch (error) {
             console.log(`Error happened: ${error.message}`);
-            return res.status(500).send({ message: error.message });
         }
     }
 
-    async logoutAccount(res) {
+    async logoutAccount() {
         try {
             await this.account.deleteSessions();
-            return res.status(204).send();
         } catch (error) {
             console.log(`Error happened: ${error.message}`);
-            return res.status(500).send({ message: error.message });
         }
     }
 
-    async getCurrentUser(res) {
+    async getCurrentUser() {
         try {
-            const user = await this.account.get();
-            return res.status(200).send(user);
+            return await this.account.get();
         } catch (error) {
             console.log(`Error happened: ${error.message}`);
-            return res.status(500).send({ message: error.message });
         }
     }
 }
